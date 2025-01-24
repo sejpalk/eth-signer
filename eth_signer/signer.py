@@ -20,6 +20,7 @@ from eth_account.datastructures import (SignedTransaction, SignedMessage,
 from eth_account.messages import SignableMessage, _hash_eip191_message
 from eth_account.signers.base import BaseAccount  # noqa: F401
 from eth_signer.utils.ecdsa import ecdsa_to_signature  # noqa: F401
+from eth_typing import Hash32
 
 
 class AWSKMSKey(BaseAccount):
@@ -106,22 +107,31 @@ class AWSKMSKey(BaseAccount):
         return self.sign(message_hash)
 
     def signHash(self, message_hash) -> SignedMessage:
+        """
+        Sign the hash of a message.
+        WARNING: Unsafe to sign arbitrary hashes. Use sign_message instead.
+        """
         (v_raw, r, s) = self.sign(message_hash).vrs
         v = to_eth_v(v_raw)
         eth_signature_bytes = to_bytes32(r) + to_bytes32(s) + to_bytes(v)
         return SignedMessage(
-            messageHash= HexBytes(message_hash),
+            message_hash=HexBytes(message_hash),
             r=r,
             s=s,
             v=v,
             signature=HexBytes(eth_signature_bytes)
         )
 
+    def unsafe_sign_hash(self, message_hash: Hash32) -> SignedMessage:
+        """
+        Sign the hash of a message.
+        WARNING: Unsafe to sign arbitrary hashes. Use sign_message instead.
+        """
+        return self.signHash(message_hash)
+
     def sign_message(self, signable_msg: SignableMessage) -> SignedMessage:
         """
-        Generate a string with the encrypted key.
-        This uses the same structure as in
-        :meth:`~eth_signer.signer.AWSKMSKey.sign_message`.
+        Sign an EIP-191 message using AWS KMS key.
         """
         message_hash = _hash_eip191_message(signable_msg)
         return self.signHash(message_hash)
