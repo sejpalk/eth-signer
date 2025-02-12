@@ -4,28 +4,28 @@ from setuptools import find_packages, setup
 
 extras_require = {
     'eth-signer':[
-        "eth_account>=0.5.5",
-        "pycryptodome>=3.6.6,<4",
-        "boto3>=1.18.42,<1.19.0",
+        "eth_account>=0.9.0",
+        "pycryptodome>=3.19.1",
+        "boto3>=1.34.69",
     ],
     'test': [
-        "pytest==5.4.1",
+        "pytest>=8.1.1",
     ],
     'lint': [
-        "flake8==3.8.3",
-        "isort>=4.2.15,<4.3.5",
-        "mypy==0.812",
+        "flake8>=7.0.0",
+        "isort>=5.13.2",
+        "mypy>=1.9.0",
     ],
     'docs': [
-        "Sphinx>=1.6.5,<2",
-        "sphinx_rtd_theme>=0.1.9,<2",
-        "towncrier>=19.2.0, <20",
+        "Sphinx>=7.2.6",
+        "sphinx_rtd_theme>=2.0.0",
+        "towncrier>=23.11.0",
     ],
     'dev': [
-        "bumpversion==0.5.3",
-        "setuptools>=38.6.0",
-        "tox>=1.8.0",
-        "twine>=1.13,<2",
+        "bumpversion>=0.6.0",
+        "setuptools>=69.2.0",
+        "tox>=4.14.1",
+        "twine>=5.0.0",
     ]
 }
 
