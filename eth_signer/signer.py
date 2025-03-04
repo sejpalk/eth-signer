@@ -266,7 +266,7 @@ class AWSKMSKey(BaseAccount):
         transaction_hash = keccak(encoded_transaction)
 
         return SignedTransaction(
-            rawTransaction=HexBytes(encoded_transaction),
+            raw_transaction=HexBytes(encoded_transaction),
             hash=HexBytes(transaction_hash),
             r=r,
             s=s,
